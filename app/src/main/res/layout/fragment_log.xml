@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp">
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="@dimen/_10ssp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="No"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"></TextView>
+        <TextView
+            android:textStyle="bold"
+            android:textSize="@dimen/_10ssp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="Time Stamp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"></TextView>
+        <TextView
+            android:textStyle="bold"
+        android:textSize="@dimen/_10ssp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Customer Name"
+        android:layout_weight="1.5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"></TextView>
+        <TextView
+            android:textStyle="bold"
+        android:textSize="@dimen/_10ssp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Signature Copy"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"></TextView>
+    </LinearLayout>
+    <TextView
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"></TextView>
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rvLogs"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+<TextView
+    android:visibility="gone"
+    android:textColor="@color/white"
+    android:textSize="@dimen/_13ssp"
+    android:text="No Logs Found."
+    android:gravity="center"
+    android:id="@+id/tvMsg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"></TextView>
+</LinearLayout>
+</layout>

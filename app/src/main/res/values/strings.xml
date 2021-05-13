@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">DSMPostage</string>
+    <string name="terms_amp_conditions"><u>Terms &amp; Conditions</u></string>
+    <string name="toast_image_intent_null">Image picker option is missing!</string>
+
+    <string name="lbl_set_profile_photo">Select Option</string>
+    <string name="lbl_take_camera_picture">Take photo</string>
+    <string name="lbl_choose_from_gallery">From camera roll</string>
+
+</resources>

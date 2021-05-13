@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+<RelativeLayout
+    android:background="@drawable/gradient_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+    android:id="@+id/rl"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_80sdp">
+    <ImageView
+        android:id="@+id/img"
+        android:layout_marginRight="@dimen/_8sdp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/logo"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"></ImageView>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:paddingLeft="@dimen/_20sdp"
+        android:gravity="left|bottom"
+        android:layout_toLeftOf="@id/img"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/white"
+        android:text="HOME"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></TextView>
+</RelativeLayout>
+    <TextView
+        android:id="@+id/line"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_below="@id/rl"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"></TextView>
+    <FrameLayout
+        android:layout_above="@id/rlBottom"
+        android:layout_below="@id/line"
+        android:id="@+id/frmContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+    
+    <LinearLayout
+        android:id="@+id/rlBottom"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp">
+
+        <LinearLayout
+            android:id="@+id/ll"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_baseline_person_outline_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></ImageView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img2"
+                android:background="@drawable/round"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/home_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></ImageView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll3"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img3"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_baseline_qr_code_scanner_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></ImageView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll4"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img4"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></ImageView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll5"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img5"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_baseline_settings_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></ImageView>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+
+</layout>

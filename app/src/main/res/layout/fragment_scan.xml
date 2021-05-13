@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:background="@drawable/rect"
+        android:layout_margin="@dimen/_20sdp"
+        android:layout_above="@id/btnStop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+    <com.google.android.material.button.MaterialButton
+        app:cornerRadius="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btnStop"
+        android:textColor="@color/app_color"
+        android:textSize="@dimen/_13ssp"
+        android:gravity="center"
+        android:text="STOP SCANNING QR"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:backgroundTint="@color/button_color"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"></com.google.android.material.button.MaterialButton>
+
+</RelativeLayout>
+</layout>

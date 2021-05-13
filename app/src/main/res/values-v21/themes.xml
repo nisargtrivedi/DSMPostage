@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="leaf">
+        <item name="android:backgroundTint">@color/button_color</item>
+        <item name="cornerRadius">@dimen/_20sdp</item>
+    </style>
+</resources>

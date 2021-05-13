@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+<RelativeLayout
+    android:background="@drawable/gradient_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+    android:id="@+id/rl"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_80sdp">
+    <ImageView
+        android:id="@+id/img"
+        android:layout_marginRight="@dimen/_8sdp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/logo"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"></ImageView>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:paddingLeft="@dimen/_20sdp"
+        android:gravity="left|bottom"
+        android:layout_toLeftOf="@id/img"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/white"
+        android:text="ORDER DETAIL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></TextView>
+</RelativeLayout>
+    <TextView
+        android:id="@+id/line"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_below="@id/rl"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"></TextView>
+
+    <TextView
+        android:paddingLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_below="@id/line"
+        android:textSize="@dimen/_13ssp"
+        android:textColor="@color/white"
+        android:id="@+id/tvInvoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
+
+    <TextView
+        android:paddingLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_below="@id/tvInvoice"
+        android:textSize="@dimen/_13ssp"
+        android:textColor="@color/white"
+        android:id="@+id/tvCustomerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
+
+    <TextView
+        android:paddingLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_below="@id/tvCustomerName"
+        android:textSize="@dimen/_13ssp"
+        android:textColor="@color/white"
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
+
+    <TextView
+        android:paddingLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_below="@id/tvDate"
+        android:textSize="@dimen/_13ssp"
+        android:textColor="@color/white"
+        android:id="@+id/tvDue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
+
+    <TextView
+        android:paddingLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_below="@id/tvDue"
+        android:textSize="@dimen/_13ssp"
+        android:textColor="@color/white"
+        android:id="@+id/tvDimond"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
+
+
+    <ImageView
+        android:visibility="gone"
+        android:layout_above="@id/btnUploadCopy"
+        android:layout_below="@id/line"
+        android:id="@+id/imgData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ImageView>
+    <com.google.android.material.button.MaterialButton
+        app:cornerRadius="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btnUploadCopy"
+        android:textColor="@color/app_color"
+        android:textSize="@dimen/_13ssp"
+        android:gravity="center"
+        android:text="UPLOAD CUSTOMER COPY"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:backgroundTint="@color/button_color"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"></com.google.android.material.button.MaterialButton>
+
+</RelativeLayout>
+
+</layout>
