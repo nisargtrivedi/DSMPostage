@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/DSMPostageAndroid.iml" filepath="$PROJECT_DIR$/.idea/DSMPostageAndroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DSMPostage.iml" filepath="$PROJECT_DIR$/.idea/modules/DSMPostage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/DSMPostage.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/DSMPostage.app.iml" />
     </modules>
   </component>
 </project>
