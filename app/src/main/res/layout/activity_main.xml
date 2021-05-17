@@ -18,8 +18,8 @@
           android:layout_centerInParent="true"
           android:scaleType="fitCenter"
           android:src="@drawable/logo"
-          android:layout_width="@dimen/_220sdp"
-          android:layout_height="@dimen/_220sdp"></ImageView>
+          android:layout_width="@dimen/_150sdp"
+          android:layout_height="@dimen/_150sdp"></ImageView>
    </RelativeLayout>
 
 </FrameLayout>

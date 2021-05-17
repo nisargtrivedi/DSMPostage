@@ -28,16 +28,21 @@ public interface APIInterface {
                               @Header("customer-secret") String customerSecret,
                               @Header("x-api-key") String xKey,
                               @Query("email") String phone);
-
-
-
-
-
+//    @Multipart
+//    @POST("demo.php")
+//    Call<String> save_updateProfile(
+//            @Header("Content-Type") String type,
+//            @Header("customer-key") String customerKey,
+//            @Header("customer-secret") String customerSecret,
+//            @Header("x-api-key") String xKey,
+//            @Part("invoice_code") RequestBody invoice_code,
+//            @Part("system_type") RequestBody system_type,
+//            @Part("email") RequestBody email,
+//            @Part MultipartBody.Part pic);
 
     @Multipart
     @POST("Beta")
     Call<String> save_updateProfile(
-            @Header("Content-Type") String type,
             @Header("customer-key") String customerKey,
             @Header("customer-secret") String customerSecret,
             @Header("x-api-key") String xKey,
@@ -45,6 +50,15 @@ public interface APIInterface {
             @Part("system_type") RequestBody system_type,
             @Part("email") RequestBody email,
             @Part MultipartBody.Part pic);
+
+
+//    @Multipart
+//    @POST("demo.php")
+//    Call<String> save_updateProfile(
+//            @Part("invoice_code") RequestBody invoice_code,
+//            @Part("system_type") RequestBody system_type,
+//            @Part("email") RequestBody email,
+//            @Part MultipartBody.Part pic);
 
 
 

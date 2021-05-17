@@ -1,17 +1,32 @@
 package com.dsmpostage.main;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.SyncStateContract;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserAttributes;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserPool;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.AuthenticationContinuation;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.AuthenticationDetails;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ChallengeContinuation;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.MultiFactorAuthenticationContinuation;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
+import com.amazonaws.regions.Regions;
 import com.dsmpostage.utility.AppPreferences;
 import com.dsmpostage.utility.Constants;
+import com.dsmpostage.utility.Util;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -29,11 +44,14 @@ public class DSMPostage extends Application {
     private static Retrofit retrofit=null;
 
     AppPreferences appPreferences;
+
+
     @Override
     public void onCreate() {
         super.onCreate();
         mInstance=this;
         appPreferences=new AppPreferences(this);
+
     }
     public static synchronized DSMPostage getInstance(){
         return mInstance;
@@ -79,10 +97,6 @@ public class DSMPostage extends Application {
     public void showDialog(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
     }
-//    public void Logout(){
-//        appPreferences.set(Constants.TOKEN,"");
-//        appPreferences.set(Constants.ROLE,0);
-//        startActivity(new Intent(this, LoginAct.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-//
-//    }
+
+
 }

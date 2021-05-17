@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_bg"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </ImageView>
+    <com.google.android.material.button.MaterialButton
+        app:cornerRadius="@dimen/_20sdp"
+        android:id="@+id/btnClosse"
+        android:textColor="@color/app_color"
+        android:textSize="@dimen/_13ssp"
+        android:gravity="center"
+        android:text="Close"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/button_color"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_50sdp"></com.google.android.material.button.MaterialButton>
+</RelativeLayout>
+</layout>

@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dsmpostage.R;
+import com.dsmpostage.main.ViewActivity;
 import com.dsmpostage.model.tblLog;
 
 import java.util.ArrayList;
@@ -68,8 +69,9 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.Holder> {
                 public void onClick(View v) {
                     if(model.SignView!=null && !model.SignView.isEmpty()){
                         try {
-                            Uri uri = Uri.parse(model.SignView);
-                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            //Uri uri = Uri.parse(model.SignView);
+                            Intent intent = new Intent(context, ViewActivity.class);
+                            intent.putExtra("data",model.SignView.toString());
                             context.startActivity(intent);
                         }catch (Exception ex){
 

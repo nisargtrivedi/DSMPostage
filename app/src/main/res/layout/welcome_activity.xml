@@ -13,11 +13,12 @@
             android:layout_centerInParent="true"
                 android:id="@+id/img"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/lock_ic"
+                android:src="@drawable/ic__lock_one"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"></ImageView>
 
         <TextView
+            android:id="@+id/tv"
             android:layout_below="@id/img"
             android:textColor="@color/white"
             android:text="Welcome"

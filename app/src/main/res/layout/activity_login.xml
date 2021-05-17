@@ -2,101 +2,107 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/Scroll"
+        android:background="@drawable/gradient_bg"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
 
-    <RelativeLayout
-    android:layout_width="match_parent"
-    android:background="@drawable/gradient_bg"
-    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-
-        <ImageView
-                android:layout_marginTop="@dimen/_45sdp"
+        <LinearLayout
+            android:id="@+id/ll"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+            <ImageView
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_gravity="center"
                 android:id="@+id/img"
-                android:layout_centerHorizontal="true"
                 android:src="@drawable/logo"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"></ImageView>
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_below="@id/img"
-            android:id="@+id/Scroll"
-            android:layout_above="@id/tvTerms"
-            android:fillViewport="true"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <LinearLayout
-        android:id="@+id/ll"
-            android:gravity="center"
-        android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:orientation="vertical"
-        android:layout_centerInParent="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputLayout
-                android:hint="Enter User Email"
-                app:startIconTint="@color/black"
-                app:startIconDrawable="@drawable/email_ic"
-                app:hintTextColor="@color/app_color"
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edtEmail"
-                    android:inputType="textEmailAddress"
-                    android:singleLine="true"
-                    android:textSize="@dimen/_11ssp"
-                    android:textColorHint="@color/app_color"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:textColor="@color/app_color"
-                    android:background="@drawable/circle_edittext"
+                android:layout_height="match_parent">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:hint="Enter User Email"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:startIconTint="@color/black"
+                    app:startIconDrawable="@drawable/ic_envelope"
+                    app:hintTextColor="@color/app_color"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_46sdp"></EditText>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                app:passwordToggleEnabled="true"
-                app:startIconTint="@color/black"
-                app:startIconDrawable="@drawable/key_ic"
-                android:hint="Enter User Password"
-                app:hintTextColor="@color/app_color"
-                app:passwordToggleDrawable="@drawable/eye_selector"
-                app:passwordToggleTint="@color/black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:maxLength="30"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:id="@+id/et_password"
-                    android:textSize="@dimen/_11ssp"
-                    android:background="@drawable/circle_edittext"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/edtEmail"
+                        android:inputType="textEmailAddress"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_11ssp"
+                        android:textColorHint="@color/app_color"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:textColor="@color/app_color"
+                        android:background="@drawable/circle_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_46sdp"></EditText>
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    app:passwordToggleEnabled="true"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:startIconTint="@color/black"
+                    app:startIconDrawable="@drawable/ic_key_black"
+                    android:hint="Enter User Password"
+                    app:hintTextColor="@color/app_color"
+                    app:passwordToggleDrawable="@drawable/eye_selector"
+                    app:passwordToggleTint="@color/black"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_46sdp"
-                    android:inputType="textPassword"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:maxLength="30"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:id="@+id/et_password"
+                        android:textSize="@dimen/_11ssp"
+                        android:background="@drawable/circle_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_46sdp"
+                        android:inputType="textPassword"
+                        android:textColor="@color/app_color"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <com.google.android.material.button.MaterialButton
+                    app:cornerRadius="@dimen/_20sdp"
+                    android:id="@+id/btnSignIn"
                     android:textColor="@color/app_color"
-                    />
+                    android:textSize="@dimen/_13ssp"
+                    android:gravity="center"
+                    android:text="SIGN IN"
+                    android:layout_marginRight="@dimen/_30sdp"
+                    android:layout_marginLeft="@dimen/_30sdp"
+                    android:backgroundTint="@color/button_color"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"></com.google.android.material.button.MaterialButton>
+            </LinearLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
 
-
-
-        <com.google.android.material.button.MaterialButton
-            app:cornerRadius="@dimen/_20sdp"
-            android:id="@+id/btnSignIn"
-            android:textColor="@color/app_color"
-            android:textSize="@dimen/_13ssp"
-            android:gravity="center"
-            android:text="SIGN IN"
-            android:layout_marginRight="@dimen/_30sdp"
-            android:layout_marginLeft="@dimen/_30sdp"
-            android:backgroundTint="@color/button_color"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"></com.google.android.material.button.MaterialButton>
     </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+
     <TextView
         android:visibility="invisible"
         android:id="@+id/tvTerms"
@@ -108,6 +114,6 @@
         android:gravity="center"
         android:text="@string/terms_amp_conditions"
         android:textColor="@color/white"></TextView>
-</RelativeLayout>
-
+</LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

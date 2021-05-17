@@ -31,17 +31,18 @@ import java.io.Serializable;
 
 public class Cognito {
 
-    private String poolID = "ap-southeast-2_Li6mtJEjd";
-    private String clientID = "7ssf34oku1ug890thv8dgpurvc";
-    private String clientSecret = "10kd46djq7j5ge57f48u0ahjk7gibc0q1qglu77ctn0bu52hhck3";
+    private String poolID = Constants.poolID;
+    private String clientID = Constants.clientID;
+    private String clientSecret = Constants.clientSecret;
 //    private Regions awsRegion = Regions.valueOf("ap-southeast-2");
-        private Regions awsRegion = Regions.AP_SOUTHEAST_2;
+        private Regions awsRegion = Constants.awsRegion;
 
     private CognitoUserPool userPool;
     private CognitoUserAttributes userAttributes;       // Used for adding attributes to the user
     private Context appContext;
     private String userPassword;
     AppPreferences appPreferences;
+    public String userEMAIl;
 
     public Cognito(Context context){
         appContext = context;
@@ -51,16 +52,18 @@ public class Cognito {
     }
     public void userLogin(String userId, String password){
         //CognitoUser cognitoUser =  userPool.getUser(userId);
+        Util.showDialog(appContext);
         CognitoUser cognitoUser =  userPool.getUser(userId);
         this.userPassword = password;
+        this.userEMAIl = userId;
         cognitoUser.getSessionInBackground(authenticationHandler);
     }
 
     public void userLogout(Activity activity,String userId){
         CognitoUser cognitoUser =  userPool.getUser(userId);
         cognitoUser.signOut();
-        activity.finishAffinity();
-        appContext.startActivity(new Intent(appContext, LoginActivity.class));
+        appContext.startActivity(new Intent(appContext, LoginActivity.class)
+        );
     }
     // Callback handler for the sign-in process
     AuthenticationHandler authenticationHandler = new AuthenticationHandler() {
@@ -68,12 +71,10 @@ public class Cognito {
         public void authenticationChallenge(ChallengeContinuation continuation) {
             Log.d("Challange--->",continuation.getChallengeName());
 
-
-            if ("NEW_PASSWORD_REQUIRED".equals(continuation.getChallengeName())) {
-
-
+            Util.hideDialog();
+            if ("NEW_PASSWORD_REQUIRED".equalsIgnoreCase(continuation.getChallengeName().toString())) {
                 appContext.startActivity(new Intent(appContext, ResetPassword.class)
-                .putExtra("config", (Serializable) continuation)
+                .putExtra("email",userEMAIl)
                 );
             }
 
@@ -102,9 +103,11 @@ public class Cognito {
         }
         @Override
         public void onSuccess(CognitoUserSession userSession, CognitoDevice newDevice) {
-            Toast.makeText(appContext,"Sign in success", Toast.LENGTH_LONG).show();
-            Log.d("SESSION--->",userSession.getIdToken().toString());
-            System.out.println("Called Session------"+userSession.getRefreshToken().getToken());
+            //Toast.makeText(appContext,"Sign in success", Toast.LENGTH_LONG).show();
+            //Log.d("SESSION--->",userSession.getIdToken().toString());
+            //System.out.println("Called Session------"+userSession.getRefreshToken().getToken());
+
+            Util.hideDialog();
             appPreferences.set("ACCESS_TOKEN",userSession.getAccessToken().getJWTToken());
             appPreferences.set("USERNAME",userSession.getUsername());
             appPreferences.set("ID_TOKEN",userSession.getIdToken().getJWTToken());
@@ -135,6 +138,7 @@ public class Cognito {
         @Override
         public void onFailure(Exception exception) {
             // Sign-in failed, check exception for the cause
+            Util.hideDialog();
             Toast.makeText(appContext,"Sign in Failure", Toast.LENGTH_LONG).show();
         }
     };

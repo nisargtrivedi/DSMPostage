@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 
 import com.dsmpostage.R;
@@ -60,6 +61,7 @@ public class ImagePickerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_image_picker);
 
         Intent intent = getIntent();
@@ -86,25 +88,26 @@ public class ImagePickerActivity extends AppCompatActivity {
 
     public static void showImagePickerOptions(Context context, PickerOptionListener listener) {
         // setup the alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(context.getString(R.string.lbl_set_profile_photo));
-        //builder.setCancelable(false);
-        // add a list
-        String[] animals = {context.getString(R.string.lbl_take_camera_picture), context.getString(R.string.lbl_choose_from_gallery)};
-        builder.setItems(animals, (dialog, which) -> {
-            switch (which) {
-                case 0:
-                    listener.onTakeCameraSelected();
-                    break;
-                case 1:
-                    listener.onChooseGallerySelected();
-                    break;
-            }
-        });
-
-        // create and show the alert dialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//        builder.setTitle(context.getString(R.string.lbl_set_profile_photo));
+//        //builder.setCancelable(false);
+//        // add a list
+//        String[] animals = {context.getString(R.string.lbl_take_camera_picture), context.getString(R.string.lbl_choose_from_gallery)};
+//        builder.setItems(animals, (dialog, which) -> {
+//            switch (which) {
+//                case 0:
+//                    listener.onTakeCameraSelected();
+//                    break;
+//                case 1:
+//                    listener.onChooseGallerySelected();
+//                    break;
+//            }
+//        });
+//
+//        // create and show the alert dialog
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+        listener.onTakeCameraSelected();
     }
 
     private void takeCameraImage() {
@@ -156,7 +159,12 @@ public class ImagePickerActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_IMAGE_CAPTURE:
                 if (resultCode == RESULT_OK) {
-                    cropImage(getCacheImagePath(fileName));
+                    //cropImage(getCacheImagePath(fileName));
+                    Uri imageUri = getCacheImagePath(fileName);
+                    Intent intent = new Intent();
+                    intent.putExtra("path", imageUri);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
                 } else {
                     setResultCancelled();
                 }
@@ -189,18 +197,18 @@ public class ImagePickerActivity extends AppCompatActivity {
     private void cropImage(Uri sourceUri) {
         Uri destinationUri = Uri.fromFile(new File(getCacheDir(), queryName(getContentResolver(), sourceUri)));
         UCrop.Options options = new UCrop.Options();
-        options.setCompressionQuality(IMAGE_COMPRESSION);
+        //options.setCompressionQuality(IMAGE_COMPRESSION);
 
         // applying UI theme
         options.setToolbarColor(ContextCompat.getColor(this, R.color.app_color));
         options.setStatusBarColor(ContextCompat.getColor(this, R.color.app_color));
         options.setActiveWidgetColor(ContextCompat.getColor(this, R.color.app_color));
 
-        if (lockAspectRatio)
-            options.withAspectRatio(ASPECT_RATIO_X, ASPECT_RATIO_Y);
-
-        if (setBitmapMaxWidthHeight)
-            options.withMaxResultSize(bitmapMaxWidth, bitmapMaxHeight);
+//        if (lockAspectRatio)
+//            options.withAspectRatio(ASPECT_RATIO_X, ASPECT_RATIO_Y);
+//
+//        if (setBitmapMaxWidthHeight)
+//            options.withMaxResultSize(bitmapMaxWidth, bitmapMaxHeight);
 
         UCrop.of(sourceUri, destinationUri)
                 .withOptions(options)

@@ -64,7 +64,7 @@
                 android:id="@+id/img1"
                 android:layout_gravity="center"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_baseline_person_outline_24"
+                android:src="@drawable/ic_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"></ImageView>
 
@@ -80,7 +80,7 @@
                 android:background="@drawable/round"
                 android:layout_gravity="center"
                 android:scaleType="centerInside"
-                android:src="@drawable/home_black"
+                android:src="@drawable/ic_home_black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"></ImageView>
 
@@ -95,7 +95,7 @@
                 android:id="@+id/img3"
                 android:layout_gravity="center"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_baseline_qr_code_scanner_24"
+                android:src="@drawable/ic_qr_code_scan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"></ImageView>
 
@@ -110,7 +110,7 @@
                 android:id="@+id/img4"
                 android:layout_gravity="center"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_setting"
+                android:src="@drawable/ic_list_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"></ImageView>
 
@@ -125,7 +125,7 @@
                 android:id="@+id/img5"
                 android:layout_gravity="center"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_baseline_settings_24"
+                android:src="@drawable/ic_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"></ImageView>
 

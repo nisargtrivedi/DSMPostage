@@ -31,6 +31,7 @@ import com.dsmpostage.databinding.FragmentScanBinding;
 import com.dsmpostage.main.ImagePickerActivity;
 import com.dsmpostage.main.OrderDetail;
 import com.dsmpostage.utility.AppPreferences;
+import com.dsmpostage.utility.Util;
 import com.google.zxing.Result;
 
 import org.json.JSONException;
@@ -73,10 +74,6 @@ public class ScanFragment extends Fragment implements ZXingScannerView.ResultHan
                 == PackageManager.PERMISSION_DENIED){
             ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
         }
-
-
-
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -87,10 +84,12 @@ public class ScanFragment extends Fragment implements ZXingScannerView.ResultHan
         binding.btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(binding.btnStop.getText().toString().equalsIgnoreCase("START SCANNING QR"))
-                    mScannerView.stopCamera();
-                else
-                    mScannerView.startCamera(0);
+                if(binding.btnStop.getText().toString().equalsIgnoreCase("START SCANNING QR")) {
+                    loadView();
+                    resetHandler();
+                    binding.btnStop.setText("STOP SCANNING QR");
+                }
+
 
             }
         });
@@ -99,6 +98,10 @@ public class ScanFragment extends Fragment implements ZXingScannerView.ResultHan
     @Override
     public void onResume() {
         super.onResume();
+        resetHandler();
+    }
+    @UiThread
+    public void resetHandler(){
         mScannerView.setResultHandler(this);
         mScannerView.startCamera(0);
     }
@@ -107,26 +110,28 @@ public class ScanFragment extends Fragment implements ZXingScannerView.ResultHan
     public void loadView(){
         binding.contentFrame.addView(mScannerView);
     }
-
     @Override
     public void onPause() {
         super.onPause();
         mScannerView.stopCamera();
-    ///    binding.btnStop.setText("START SCANNING QR");
+        binding.contentFrame.removeAllViews();
+        binding.btnStop.setText("START SCANNING QR");
     }
     @Override
     public void handleResult(Result result) {
 
-
-        Log.d("RESULT---->",result.getResultPoints().toString());
+        try{
+       // Log.d("RESULT---->",result.getText().toString());
         if(result!=null && !result.getText().isEmpty()) {
-            Log.d("RESULT---->",result.toString());
-            getActivity().startActivity(new Intent(getActivity(), OrderDetail.class)
-            .putExtra("data",result.getText())
-            );
 
-
-
+            if (result.getText().toString().contains("Invoice Code:")){
+                getActivity().startActivity(new Intent(getActivity(), OrderDetail.class)
+                        .putExtra("data", result.getText())
+                );
+            }else{
+                Util.showDialog(getActivity(),getString(R.string.invoice_not_found));
+            }
+        }
 //            try {
 //                ImagePickerActivity.showImagePickerOptions(getActivity(), new ImagePickerActivity.PickerOptionListener() {
 //                    @Override
@@ -142,6 +147,8 @@ public class ScanFragment extends Fragment implements ZXingScannerView.ResultHan
 //            } catch (Exception e) {
 //                e.printStackTrace();
 //            }
+        }catch (Exception ex){
+            Util.showDialog(getActivity(),getString(R.string.invoice_not_found));
         }
 
 

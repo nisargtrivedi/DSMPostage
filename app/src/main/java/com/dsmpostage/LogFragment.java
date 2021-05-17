@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -56,9 +57,9 @@ public class LogFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         appPreferences=new AppPreferences(getActivity());
         LoadData();
-
-
     }
+
+    @UiThread
     private void LoadData(){
         Util.showDialog(getActivity());
        APIInterface apiInterface=DSMPostage.getRetrofitClient().create(APIInterface.class);

@@ -37,78 +37,78 @@ public class Util {
     }
     public static void setBg(int no,ImageView im1,ImageView im2,ImageView im3,ImageView im4,ImageView im5){
        if(no==2){
-           im1.setImageResource(R.drawable.ic_baseline_person_outline_24);
+           im1.setImageResource(R.drawable.ic_user);
            im1.setBackgroundResource(0);
 
-           im2.setImageResource(R.drawable.home_black);
+           im2.setImageResource(R.drawable.ic_home_black);
            im2.setBackgroundResource(R.drawable.round);
 
-           im3.setImageResource(R.drawable.ic_baseline_qr_code_scanner_24);
+           im3.setImageResource(R.drawable.ic_qr_code_scan);
            im3.setBackgroundResource(0);
 
-           im4.setImageResource(R.drawable.ic_setting);
+           im4.setImageResource(R.drawable.ic_list_text);
            im4.setBackgroundResource(0);
 
-           im5.setImageResource(R.drawable.ic_baseline_settings_24);
+           im5.setImageResource(R.drawable.ic_settings);
            im5.setBackgroundResource(0);
        } else if(no==1){
-            im1.setImageResource(R.drawable.person_black);
+            im1.setImageResource(R.drawable.ic_user_black);
             im1.setBackgroundResource(R.drawable.round);
 
-            im2.setImageResource(R.drawable.ic_baseline_home_24);
+            im2.setImageResource(R.drawable.ic_home);
             im2.setBackgroundResource(0);
 
-            im3.setImageResource(R.drawable.ic_baseline_qr_code_scanner_24);
+            im3.setImageResource(R.drawable.ic_qr_code_scan);
             im3.setBackgroundResource(0);
 
-            im4.setImageResource(R.drawable.ic_setting);
+            im4.setImageResource(R.drawable.ic_list_text);
             im4.setBackgroundResource(0);
 
-            im5.setImageResource(R.drawable.ic_baseline_settings_24);
+            im5.setImageResource(R.drawable.ic_settings);
             im5.setBackgroundResource(0);
         }else if(no==3){
-           im1.setImageResource(R.drawable.ic_baseline_person_outline_24);
+           im1.setImageResource(R.drawable.ic_user);
            im1.setBackgroundResource(0);
 
-           im2.setImageResource(R.drawable.ic_baseline_home_24);
+           im2.setImageResource(R.drawable.ic_home);
            im2.setBackgroundResource(0);
 
-           im3.setImageResource(R.drawable.scan_black);
+           im3.setImageResource(R.drawable.ic_qr_code_scan_black);
            im3.setBackgroundResource(R.drawable.round);
 
-           im4.setImageResource(R.drawable.ic_setting);
+           im4.setImageResource(R.drawable.ic_list_text);
            im4.setBackgroundResource(0);
 
-           im5.setImageResource(R.drawable.ic_baseline_settings_24);
+           im5.setImageResource(R.drawable.ic_settings);
            im5.setBackgroundResource(0);
        }else if(no==4){
-           im1.setImageResource(R.drawable.ic_baseline_person_outline_24);
+           im1.setImageResource(R.drawable.ic_user);
            im1.setBackgroundResource(0);
 
-           im2.setImageResource(R.drawable.ic_baseline_home_24);
+           im2.setImageResource(R.drawable.ic_home);
            im2.setBackgroundResource(0);
 
-           im3.setImageResource(R.drawable.ic_baseline_qr_code_scanner_24);
+           im3.setImageResource(R.drawable.ic_qr_code_scan);
            im3.setBackgroundResource(0);
 
-           im4.setImageResource(R.drawable.black_setting);
+           im4.setImageResource(R.drawable.ic_list_text_black);
            im4.setBackgroundResource(R.drawable.round);
 
-           im5.setImageResource(R.drawable.ic_baseline_settings_24);
+           im5.setImageResource(R.drawable.ic_settings);
            im5.setBackgroundResource(0);
        }else if(no==5){
-           im1.setImageResource(R.drawable.ic_baseline_person_outline_24);
+           im1.setImageResource(R.drawable.ic_user);
            im1.setBackgroundResource(0);
 
-           im2.setImageResource(R.drawable.ic_baseline_home_24);
+           im2.setImageResource(R.drawable.ic_home);
            im2.setBackgroundResource(0);
 
-           im3.setImageResource(R.drawable.ic_baseline_qr_code_scanner_24);
+           im3.setImageResource(R.drawable.ic_qr_code_scan);
            im3.setBackgroundResource(0);
 
-           im4.setImageResource(R.drawable.ic_setting);
+           im4.setImageResource(R.drawable.ic_list_text);
            im4.setBackgroundResource(0);
-           im5.setImageResource(R.drawable.base_setting_black);
+           im5.setImageResource(R.drawable.ic_settings_black);
            im5.setBackgroundResource(R.drawable.round);
        }
     }

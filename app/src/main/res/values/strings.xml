@@ -6,5 +6,6 @@
     <string name="lbl_set_profile_photo">Select Option</string>
     <string name="lbl_take_camera_picture">Take photo</string>
     <string name="lbl_choose_from_gallery">From camera roll</string>
+    <string name="invoice_not_found">Invoice/Consignment not found in the system</string>
 
 </resources>

@@ -1,7 +1,10 @@
 package com.dsmpostage.main;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -9,11 +12,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
 
 import com.dsmpostage.R;
@@ -22,6 +29,14 @@ import com.dsmpostage.netowork.APIInterface;
 import com.dsmpostage.utility.AppPreferences;
 import com.dsmpostage.utility.Constants;
 import com.dsmpostage.utility.Util;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -29,6 +44,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -37,14 +53,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static androidx.core.content.FileProvider.getUriForFile;
+
 public class OrderDetail extends AppCompatActivity {
 
     OrderDetailActivityBinding binding;
     String path;
     AppPreferences appPreferences;
+    int i=0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         appPreferences=new AppPreferences(this);
         binding= DataBindingUtil.setContentView(this, R.layout.order_detail_activity);
         String data=getIntent().getStringExtra("data");
@@ -58,65 +79,142 @@ public class OrderDetail extends AppCompatActivity {
                 binding.tvDue.setText(Orderdata[4]);
                 binding.tvDimond.setText(Orderdata[5]);
             }
+            binding.imgBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(i==0){
+                        backOne();
+                        i++;
+                    }else {
+                        i=0;
+                        finish();
+                    }
+                }
+            });
 
             binding.btnUploadCopy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    i=0;
+                    try{
+                        if(binding.btnUploadCopy.getText().toString().equalsIgnoreCase("UPLOAD SCANNED COPY"))
+                        {
+                            i=0;
+                            String[] in = binding.tvInvoice.getText().toString().trim().split(":");
+                            String[] scDimanod = binding.tvDimond.getText().toString().trim().split(":");
+                            RequestBody invoiceNo = RequestBody.create(in[1].trim(),MediaType.parse("text/plain"));
+                            RequestBody system_type = RequestBody.create(scDimanod[1].trim(),MediaType.parse("multipart/form-data"));
+                            RequestBody email = RequestBody.create(appPreferences.getString("USERNAME").toString(),MediaType.parse("multipart/form-data"));
 
-                    if(binding.btnUploadCopy.getText().toString().equalsIgnoreCase("UPLOAD SCANNED COPY")){
+                            File file = new File(path.toString());
 
-                        String[] in = binding.tvInvoice.getText().toString().trim().split(":");
-                        RequestBody invoiceNo = RequestBody.create(MediaType.parse("text/plain"), in[1].trim());
-                        RequestBody system_type = RequestBody.create(MediaType.parse("text/plain"), "diamond");
-                        RequestBody email = RequestBody.create(MediaType.parse("text/plain"), appPreferences.getString("USERNAME"));
+                            MultipartBody.Part signature = null;
 
-                        File file = new File(path.toString());
+                            RequestBody requestFile = RequestBody.create(file,MediaType.parse("multipart/form-data"));
+                            signature = MultipartBody.Part.createFormData("signature_document", file.getName(), requestFile);
 
-                        MultipartBody.Part signature = null;
+                            Util.showDialog(OrderDetail.this);
+                            APIInterface apiInterface=DSMPostage.getRetrofitClient().create(APIInterface.class);
 
-                        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-                        signature = MultipartBody.Part.createFormData("signature_document", file.getName(), requestFile);
-
-                        Util.showDialog(OrderDetail.this);
-                        APIInterface apiInterface=DSMPostage.getRetrofitClient().create(APIInterface.class);
-
-
-                        apiInterface.save_updateProfile(Constants.TYPE, Constants.CUSTOMER_KEY,Constants.CUSTOMER_SECRET,Constants.XKEY,invoiceNo,system_type,email,signature).enqueue(new Callback<String>() {
-                            @Override
-                            public void onResponse(Call<String> call, Response<String> response) {
-                                Util.hideDialog();
-                                System.out.println("Response--->"+response);
-                            }
-
-                            @Override
-                            public void onFailure(Call<String> call, Throwable t) {
-                                Util.hideDialog();
-                                System.out.println("Response--->"+t.getMessage());
-                            }
-                        });
-
-                    }else {
-                        try {
-                            ImagePickerActivity.showImagePickerOptions(OrderDetail.this, new ImagePickerActivity.PickerOptionListener() {
+//                        Constants.TYPE, Constants.CUSTOMER_KEY,Constants.CUSTOMER_SECRET,Constants.XKEY,
+                            apiInterface.save_updateProfile(Constants.CUSTOMER_KEY,Constants.CUSTOMER_SECRET,Constants.XKEY,invoiceNo,system_type,email,signature).enqueue(new Callback<String>() {
                                 @Override
-                                public void onTakeCameraSelected() {
-                                    launchCameraIntent();
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    Util.hideDialog();
+                                    //System.out.println("Response--->"+response.body());
+                                    try {
+                                        JSONObject object = new JSONObject(response.body().toString());
+
+                                        int status = object.optInt("status");
+                                        String message = object.optString("message");
+
+                                        if (status == 200) {
+
+                                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(OrderDetail.this);
+                                            LayoutInflater inflater = getLayoutInflater();
+                                            View dialogView = inflater.inflate(R.layout.dialog_success, null);
+                                            dialogBuilder.setView(dialogView);
+                                            dialogBuilder.setCancelable(false);
+
+                                            com.google.android.material.button.MaterialButton btnOk = dialogView.findViewById(R.id.btnOk);
+                                            AlertDialog alertDialog = dialogBuilder.create();
+                                            alertDialog.show();
+
+                                            btnOk.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    alertDialog.dismiss();
+                                                    finish();
+
+                                                }
+                                            });
+                                        }
+                                        else{
+                                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(OrderDetail.this);
+                                            LayoutInflater inflater = getLayoutInflater();
+                                            View dialogView = inflater.inflate(R.layout.dialog_success, null);
+                                            dialogBuilder.setView(dialogView);
+                                            dialogBuilder.setCancelable(false);
+
+                                            com.google.android.material.button.MaterialButton btnOk = dialogView.findViewById(R.id.btnOk);
+                                            TextView  tvMsg= dialogView.findViewById(R.id.tvMsg);
+                                            AlertDialog alertDialog = dialogBuilder.create();
+                                            alertDialog.show();
+                                            tvMsg.setText(R.string.invoice_not_found);
+
+                                            btnOk.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    alertDialog.dismiss();
+                                                    finish();
+
+                                                }
+                                            });
+
+
+                                        }
+                                    } catch(JSONException e){
+                                        e.printStackTrace();
+                                    }
+
+
                                 }
 
                                 @Override
-                                public void onChooseGallerySelected() {
-                                    launchGalleryIntent();
+                                public void onFailure(Call<String> call, Throwable t) {
+                                    Util.hideDialog();
+                                    System.out.println("Response--->"+t.getMessage());
                                 }
                             });
-                        } catch (Exception e) {
-                            e.printStackTrace();
+
                         }
+                        else {
+                            try {
+                                ImagePickerActivity.showImagePickerOptions(OrderDetail.this, new ImagePickerActivity.PickerOptionListener() {
+                                    @Override
+                                    public void onTakeCameraSelected() {
+                                        launchCameraIntent();
+                                    }
+
+                                    @Override
+                                    public void onChooseGallerySelected() {
+                                        launchGalleryIntent();
+                                    }
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }catch (Exception ex){
+
                     }
+
                 }
             });
         }
 
     }
+
 
     @Override
     protected void onResume() {
@@ -129,6 +227,7 @@ public class OrderDetail extends AppCompatActivity {
 
     }
 
+
     private void launchCameraIntent() {
         Intent intent = new Intent(OrderDetail.this, ImagePickerActivity.class);
         intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_IMAGE_CAPTURE);
@@ -139,9 +238,9 @@ public class OrderDetail extends AppCompatActivity {
         intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1);
 
         // setting maximum bitmap width and height
-        intent.putExtra(ImagePickerActivity.INTENT_SET_BITMAP_MAX_WIDTH_HEIGHT, true);
-        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_WIDTH, 1000);
-        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_HEIGHT, 1000);
+        intent.putExtra(ImagePickerActivity.INTENT_SET_BITMAP_MAX_WIDTH_HEIGHT, false);
+        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_WIDTH, 500);
+        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_HEIGHT, 500);
 
         startActivityForResult(intent, 7);
     }
@@ -160,6 +259,7 @@ public class OrderDetail extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 7) {
+//            System.out.println("URI----" + data.getParcelableExtra("path") + "---");
             if (resultCode == RESULT_OK) {
                 try {
                     try {
@@ -238,6 +338,7 @@ public class OrderDetail extends AppCompatActivity {
         // Log.i("CAMERA FILE",fpath);
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(OrderDetail.this.getContentResolver(), fpath);
+
             path  = saveImage(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
@@ -248,6 +349,12 @@ public class OrderDetail extends AppCompatActivity {
         return path;
     }
 
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
+    }
     private String onSelectFromGalleryResult(Intent data) {
         try {
             Uri fpath = data.getParcelableExtra("path");
@@ -270,4 +377,14 @@ public class OrderDetail extends AppCompatActivity {
         return path;
     }
 
+    private void backOne(){
+        binding.imgData.setVisibility(View.GONE);
+        binding.tvTitle.setText("ORDER DETAIL");
+        binding.btnUploadCopy.setText("UPLOAD CUSTOMER COPY");
+        binding.tvInvoice.setVisibility(View.VISIBLE);
+        binding.tvCustomerName.setVisibility(View.VISIBLE);
+        binding.tvDue.setVisibility(View.VISIBLE);
+        binding.tvDate.setVisibility(View.VISIBLE);
+        binding.tvDimond.setVisibility(View.VISIBLE);
+    }
 }
