@@ -22,7 +22,7 @@ import retrofit2.http.Query;
 public interface APIInterface {
 
 
-    @GET("Beta")
+    @GET("prod")
     Call<LogResponse> getData(@Header("Content-Type") String type,
                               @Header("customer-key") String customerKey,
                               @Header("customer-secret") String customerSecret,
@@ -41,7 +41,7 @@ public interface APIInterface {
 //            @Part MultipartBody.Part pic);
 
     @Multipart
-    @POST("Beta")
+    @POST("prod")
     Call<String> save_updateProfile(
             @Header("customer-key") String customerKey,
             @Header("customer-secret") String customerSecret,

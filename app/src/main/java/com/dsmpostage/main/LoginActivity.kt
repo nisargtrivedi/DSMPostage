@@ -43,8 +43,8 @@ class LoginActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         obj = Cognito(this)
 
-        //binding.edtEmail.setText("nisarg.trivedi1192@gmail.com")
-        //binding.etPassword.setText("Nisarg@123")
+        //binding.edtEmail.setText("sharsh.2109@gmail.com")
+        //binding.etPassword.setText("Siimteq#123")
 
         binding.btnSignIn.setOnClickListener {
             if(TextUtils.isEmpty(binding.edtEmail.text.toString().trim())){
@@ -54,7 +54,6 @@ class LoginActivity : AppCompatActivity() {
             } else if(TextUtils.isEmpty(binding.etPassword.text.toString().trim())){
                 Util.showDialog(this,"Please enter password")
             }else{
-
                 if(DSMPostage.getInstance().isNetworkAvailable) {
                     obj.userLogin(
                         binding.edtEmail.text.toString().trim(),

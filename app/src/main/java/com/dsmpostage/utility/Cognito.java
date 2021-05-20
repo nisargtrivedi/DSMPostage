@@ -28,6 +28,8 @@ import com.dsmpostage.main.LoginActivity;
 import com.dsmpostage.main.ResetPassword;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 
 public class Cognito {
 
@@ -37,7 +39,7 @@ public class Cognito {
 //    private Regions awsRegion = Regions.valueOf("ap-southeast-2");
         private Regions awsRegion = Constants.awsRegion;
 
-    private CognitoUserPool userPool;
+    public CognitoUserPool userPool;
     private CognitoUserAttributes userAttributes;       // Used for adding attributes to the user
     private Context appContext;
     private String userPassword;
@@ -47,6 +49,18 @@ public class Cognito {
     public Cognito(Context context){
         appContext = context;
         appPreferences=new AppPreferences(context);
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            byte[] base64decodedClientID = Base64.getDecoder().decode(this.clientID);
+//            byte[] base64decodedClientSecret = Base64.getDecoder().decode(this.clientSecret);
+//            byte[] base64decodedClientPool = Base64.getDecoder().decode(this.poolID);
+//            try {
+//                this.clientID=new String(base64decodedClientID, "utf-8");
+//                this.clientSecret=new String(base64decodedClientSecret, "utf-8");
+//                this.poolID=new String(base64decodedClientPool, "utf-8");
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
+//        }
         userPool = new CognitoUserPool(context, this.poolID, this.clientID, this.clientSecret, this.awsRegion);
         userAttributes = new CognitoUserAttributes();
     }
@@ -75,6 +89,12 @@ public class Cognito {
             if ("NEW_PASSWORD_REQUIRED".equalsIgnoreCase(continuation.getChallengeName().toString())) {
                 appContext.startActivity(new Intent(appContext, ResetPassword.class)
                 .putExtra("email",userEMAIl)
+                                .putExtra("password",userPassword)
+                );
+            }else if ("FORCE_CHANGE_PASSWORD".equalsIgnoreCase(continuation.getChallengeName().toString())) {
+                appContext.startActivity(new Intent(appContext, ResetPassword.class)
+                        .putExtra("email",userEMAIl)
+                        .putExtra("password",userPassword)
                 );
             }
 

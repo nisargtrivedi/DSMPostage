@@ -31,6 +31,9 @@ import com.dsmpostage.utility.AppPreferences;
 import com.dsmpostage.utility.Constants;
 import com.dsmpostage.utility.Util;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,6 +66,7 @@ public class LogFragment extends Fragment {
     private void LoadData(){
         Util.showDialog(getActivity());
        APIInterface apiInterface=DSMPostage.getRetrofitClient().create(APIInterface.class);
+
        apiInterface.getData(Constants.TYPE, Constants.CUSTOMER_KEY,Constants.CUSTOMER_SECRET,Constants.XKEY,appPreferences.getString("USERNAME")).enqueue(new Callback<LogResponse>() {
            @Override
            public void onResponse(Call<LogResponse> call, Response<LogResponse> response) {
@@ -92,5 +96,6 @@ public class LogFragment extends Fragment {
               // System.out.println("Response--->"+t.getMessage());
            }
        });
+
     }
 }

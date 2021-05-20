@@ -31,6 +31,8 @@ import com.dsmpostage.utility.Constants;
 import com.dsmpostage.utility.Util;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,6 +53,19 @@ public class ResetPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         appPreferences=new AppPreferences(this);
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            byte[] base64decodedClientID = Base64.getDecoder().decode(this.clientID);
+//            byte[] base64decodedClientSecret = Base64.getDecoder().decode(this.clientSecret);
+//            byte[] base64decodedClientPool = Base64.getDecoder().decode(this.poolID);
+//            try {
+//                this.clientID=new String(base64decodedClientID, "utf-8");
+//                this.clientSecret=new String(base64decodedClientSecret, "utf-8");
+//                this.poolID=new String(base64decodedClientPool, "utf-8");
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
         binding= DataBindingUtil.setContentView(this, R.layout.activity_reset_password);
         userPool = new CognitoUserPool(this, this.poolID, this.clientID, this.clientSecret, this.awsRegion);
 
@@ -69,10 +84,14 @@ public class ResetPassword extends AppCompatActivity {
                         Util.showDialog(ResetPassword.this, "Please enter old password");
                     }else if (TextUtils.isEmpty(binding.etNewpassword.getText().toString())) {
                         Util.showDialog(ResetPassword.this, "Please enter new password");
-                    }else if (!isValidPassword(binding.etNewpassword.getText().toString())) {
+                    }else if (binding.etNewpassword.getText().toString().length()<8) {
+                        Util.showDialog(ResetPassword.this, "New Password should be minimum 8 character");
+                    } else if (!isValidPassword(binding.etNewpassword.getText().toString())) {
                         Util.showDialog(ResetPassword.this, "New Password should be minimum 8 character , at least one digit , at least one special char , at least one upper case.");
                     }else if (TextUtils.isEmpty(binding.etReNewpassword.getText().toString())) {
                         Util.showDialog(ResetPassword.this, "Please enter confirm password");
+                    }else if (binding.etReNewpassword.getText().toString().length()<8) {
+                        Util.showDialog(ResetPassword.this, "Confirm Password should be minimum 8 character");
                     }else if (!isValidPassword(binding.etReNewpassword.getText().toString())) {
                         Util.showDialog(ResetPassword.this, "Confirm Password should be minimum 8 character , at least one digit , at least one special char , at least one upper case.");
                     }else if (binding.etPassword.getText().toString().equalsIgnoreCase(binding.etNewpassword.getText().toString())) {
@@ -87,7 +106,7 @@ public class ResetPassword extends AppCompatActivity {
 //                            continuation.continueTask();
                             Util.showDialog(ResetPassword.this);
                             CognitoUser cognitoUser = userPool.getUser(binding.edtEmail.getText().toString());
-                            userPassword = binding.etNewpassword.getText().toString();
+                            userPassword = getIntent().getStringExtra("password");
                             cognitoUser.getSessionInBackground(new AuthenticationHandler() {
                                 @Override
                                 public void onSuccess(CognitoUserSession userSession, CognitoDevice newDevice) {
@@ -121,11 +140,9 @@ public class ResetPassword extends AppCompatActivity {
                                 public void authenticationChallenge(ChallengeContinuation continuation) {
                                     Util.hideDialog();
                                     if ("NEW_PASSWORD_REQUIRED".equalsIgnoreCase(continuation.getChallengeName().toString())) {
-
                                         NewPasswordContinuation newPasswordContinuation = (NewPasswordContinuation) continuation;
                                         newPasswordContinuation.setPassword(binding.etNewpassword.getText().toString());
                                         continuation.continueTask();
-
                                     }
                                 }
 
@@ -147,15 +164,24 @@ public class ResetPassword extends AppCompatActivity {
 
     public boolean isValidPassword(final String password) {
 
-        Pattern pattern;
-        Matcher matcher;
-
-        final String PASSWORD_PATTERN = "(/^(?=.*\\d)(?=.*[A-Z])([@$%&#])[0-9a-zA-Z]{4,}$/)";
-
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(password);
-
-        return matcher.matches();
+        char ch;
+        boolean capitalFlag = false;
+        boolean lowerCaseFlag = false;
+        boolean numberFlag = false;
+        boolean specialCh = false;
+        for(int i=0;i < password.length();i++) {
+            ch = password.charAt(i);
+            if( Character.isDigit(ch)) {
+                numberFlag = true;
+            } else if (Character.isUpperCase(ch)) {
+                capitalFlag = true;
+            } else if (Character.isLowerCase(ch)) {
+                lowerCaseFlag = true;
+            }
+            if(numberFlag && capitalFlag && lowerCaseFlag)
+                return true;
+        }
+        return false;
 
     }
 }

@@ -42,6 +42,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -117,6 +119,7 @@ public class OrderDetail extends AppCompatActivity {
                             APIInterface apiInterface=DSMPostage.getRetrofitClient().create(APIInterface.class);
 
 //                        Constants.TYPE, Constants.CUSTOMER_KEY,Constants.CUSTOMER_SECRET,Constants.XKEY,
+
                             apiInterface.save_updateProfile(Constants.CUSTOMER_KEY,Constants.CUSTOMER_SECRET,Constants.XKEY,invoiceNo,system_type,email,signature).enqueue(new Callback<String>() {
                                 @Override
                                 public void onResponse(Call<String> call, Response<String> response) {
@@ -183,10 +186,9 @@ public class OrderDetail extends AppCompatActivity {
                                 @Override
                                 public void onFailure(Call<String> call, Throwable t) {
                                     Util.hideDialog();
-                                    System.out.println("Response--->"+t.getMessage());
+                                    //System.out.println("Response--->"+t.getMessage()+"---");
                                 }
                             });
-
                         }
                         else {
                             try {
