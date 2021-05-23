@@ -121,10 +121,14 @@ public class ScanFragment extends Fragment implements ZXingScannerView.ResultHan
     public void handleResult(Result result) {
 
         try{
-       // Log.d("RESULT---->",result.getText().toString());
+        Log.d("RESULT---->",result.getText().toString());
         if(result!=null && !result.getText().isEmpty()) {
 
             if (result.getText().toString().contains("Invoice Code:")){
+                getActivity().startActivity(new Intent(getActivity(), OrderDetail.class)
+                        .putExtra("data", result.getText())
+                );
+            }else if (result.getText().toString().contains("Consignment Code:")){
                 getActivity().startActivity(new Intent(getActivity(), OrderDetail.class)
                         .putExtra("data", result.getText())
                 );

@@ -208,7 +208,7 @@ public class OrderDetail extends AppCompatActivity {
                             }
                         }
                     }catch (Exception ex){
-
+                        Util.showDialog(OrderDetail.this,"Invoice Code/Consignment Code might be wrong");
                     }
 
                 }
