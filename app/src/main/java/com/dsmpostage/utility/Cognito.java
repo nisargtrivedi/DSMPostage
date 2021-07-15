@@ -134,7 +134,7 @@ public class Cognito {
             appPreferences.set("REFRESH_TOKEN",userSession.getRefreshToken().getToken());
 
             appContext.startActivity(new Intent(appContext, HomeActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP)
             );
         }
         @Override

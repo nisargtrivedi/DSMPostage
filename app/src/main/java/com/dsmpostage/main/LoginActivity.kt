@@ -1,33 +1,20 @@
 package com.dsmpostage.main
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserAttributes
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserPool
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.AuthenticationContinuation
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.AuthenticationDetails
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ChallengeContinuation
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.MultiFactorAuthenticationContinuation
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler
-import com.amazonaws.regions.Regions
 import com.dsmpostage.R
 import com.dsmpostage.databinding.ActivityLoginBinding
 import com.dsmpostage.utility.AppPreferences
 import com.dsmpostage.utility.Cognito
+import com.dsmpostage.utility.KeyBoardHandling
 import com.dsmpostage.utility.Util
 import com.google.android.material.button.MaterialButton
-import java.io.Serializable
 
 class LoginActivity : AppCompatActivity() {
 
@@ -55,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
                 Util.showDialog(this,"Please enter password")
             }else{
                 if(DSMPostage.getInstance().isNetworkAvailable) {
+                    KeyBoardHandling.hideSoftKeyboard(this@LoginActivity)
                     obj.userLogin(
                         binding.edtEmail.text.toString().trim(),
                         binding.etPassword.text.toString().trim()
@@ -63,6 +51,12 @@ class LoginActivity : AppCompatActivity() {
                     Util.showDialog(this,"No Internet Available")
                 }
             }
+        }
+
+        binding.tvForgotPassword.setOnClickListener {
+            val mainIntent = Intent(this, ForgotPassword::class.java)
+            startActivity(mainIntent)
+            finish()
         }
 
     }

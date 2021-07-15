@@ -58,6 +58,7 @@
         <activity android:name=".main.ImagePickerActivity"></activity>
         <activity android:name=".main.OrderDetail" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize"></activity>
         <activity android:name=".main.ViewActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".main.ForgotPassword" android:windowSoftInputMode="adjustResize" android:screenOrientation="portrait"></activity>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

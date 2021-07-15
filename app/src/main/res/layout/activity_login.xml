@@ -98,6 +98,17 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_50sdp"></com.google.android.material.button.MaterialButton>
+
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/tvForgotPassword"
+                android:textSize="@dimen/_11ssp"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
             </LinearLayout>
 
 
