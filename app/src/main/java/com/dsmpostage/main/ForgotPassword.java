@@ -106,6 +106,7 @@ public class ForgotPassword extends AppCompatActivity {
                                         Util.hideDialog();
                                         CognitoUserCodeDeliveryDetails codeSent = continuation.getParameters();
                                         Log.d("RESET CODE------>", codeSent.getAttributeName());
+                                        Log.d("RESET CODE------>", continuation.toString());
                                         Util.showDialog(ForgotPassword.this, "Send code on you email address");
                                         //binding.etCode.setText(codeSent.getDestination());
                                         forgotPasswordContinuation = continuation;
