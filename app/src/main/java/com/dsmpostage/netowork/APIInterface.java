@@ -22,16 +22,18 @@ import retrofit2.http.Query;
 public interface APIInterface {
 
 
-    @GET("prod")
-    Call<LogResponse> getData(@Header("Content-Type") String type,
-                              @Header("customer-key") String customerKey,
-                              @Header("customer-secret") String customerSecret,
-                              @Header("x-api-key") String xKey,
-                              @Query("email") String phone);
+    //Live
+//    @GET("prod")
+//    Call<LogResponse> getData(@Header("Content-Type") String type,
+//                              @Header("customer-key") String customerKey,
+//                              @Header("customer-secret") String customerSecret,
+//                              @Header("x-api-key") String xKey,
+//                              @Query("email") String phone);
+//
+//
 //    @Multipart
-//    @POST("demo.php")
+//    @POST("prod")
 //    Call<String> save_updateProfile(
-//            @Header("Content-Type") String type,
 //            @Header("customer-key") String customerKey,
 //            @Header("customer-secret") String customerSecret,
 //            @Header("x-api-key") String xKey,
@@ -40,8 +42,17 @@ public interface APIInterface {
 //            @Part("email") RequestBody email,
 //            @Part MultipartBody.Part pic);
 
+    //Development
+    @GET("Beta")
+    Call<LogResponse> getData(@Header("Content-Type") String type,
+                              @Header("customer-key") String customerKey,
+                              @Header("customer-secret") String customerSecret,
+                              @Header("x-api-key") String xKey,
+                              @Query("email") String phone);
+
+
     @Multipart
-    @POST("prod")
+    @POST("Beta")
     Call<String> save_updateProfile(
             @Header("customer-key") String customerKey,
             @Header("customer-secret") String customerSecret,
@@ -52,13 +63,6 @@ public interface APIInterface {
             @Part MultipartBody.Part pic);
 
 
-//    @Multipart
-//    @POST("demo.php")
-//    Call<String> save_updateProfile(
-//            @Part("invoice_code") RequestBody invoice_code,
-//            @Part("system_type") RequestBody system_type,
-//            @Part("email") RequestBody email,
-//            @Part MultipartBody.Part pic);
 
 
 

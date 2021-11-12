@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -162,6 +163,5 @@ public class ScanFragment extends Fragment implements ZXingScannerView.ResultHan
 
 
     }
-
 
 }
