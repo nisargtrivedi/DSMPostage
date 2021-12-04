@@ -61,8 +61,10 @@ public class OrderDetail extends AppCompatActivity {
 
     OrderDetailActivityBinding binding;
     String path;
+    String documentType="";
     AppPreferences appPreferences;
     int i=0;
+    int urlVersion=0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,14 +75,27 @@ public class OrderDetail extends AppCompatActivity {
         String data=getIntent().getStringExtra("data");
         if(data!=null){
             String[] Orderdata=data.split(",");
-            for(int i=0;i<Orderdata.length;i++){
+            //for(int i=0;i<Orderdata.length;i++){
                 //Log.d("DATA--"+i,Orderdata[i]);
+
+//                App: DSM,Type: Manufacturing
+
+            try {
                 binding.tvInvoice.setText(Orderdata[0]);
                 binding.tvCustomerName.setText(Orderdata[1]);
                 binding.tvDate.setText(Orderdata[2] + Orderdata[3]);
                 binding.tvDue.setText(Orderdata[4]);
                 binding.tvDimond.setText(Orderdata[5]);
+                if (Orderdata[6].contains("MDJ")) {
+                    urlVersion=2;
+                } else if (Orderdata[6].contains("DSM")) {
+                    urlVersion=1;
+                }
+                documentType = (Orderdata[7].contains("Manufacturing")?"Manufacturing":"Sales");
+            }catch (Exception ex){
+                Util.showDialog(OrderDetail.this,"Please check the invoice data");
             }
+            //}
             binding.imgBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -107,6 +122,7 @@ public class OrderDetail extends AppCompatActivity {
                             RequestBody invoiceNo = RequestBody.create(in[1].trim(),MediaType.parse("text/plain"));
                             RequestBody system_type = RequestBody.create(scDimanod[1].trim(),MediaType.parse("multipart/form-data"));
                             RequestBody email = RequestBody.create(appPreferences.getString("USERNAME").toString(),MediaType.parse("multipart/form-data"));
+                            RequestBody docType = RequestBody.create(documentType.toString(),MediaType.parse("multipart/form-data"));
 
                             File file = new File(path.toString());
 
@@ -116,11 +132,12 @@ public class OrderDetail extends AppCompatActivity {
                             signature = MultipartBody.Part.createFormData("signature_document", file.getName(), requestFile);
 
                             Util.showDialog(OrderDetail.this);
-                            APIInterface apiInterface=DSMPostage.getRetrofitClient().create(APIInterface.class);
+                            DSMPostage.retrofit = null;
+                            APIInterface apiInterface= (urlVersion==1 ? DSMPostage.getRetrofitClient().create(APIInterface.class) : DSMPostage.getRetrofitClient2().create(APIInterface.class));
 
 //                        Constants.TYPE, Constants.CUSTOMER_KEY,Constants.CUSTOMER_SECRET,Constants.XKEY,
 
-                            apiInterface.save_updateProfile(Constants.CUSTOMER_KEY,Constants.CUSTOMER_SECRET,Constants.XKEY,invoiceNo,system_type,email,signature).enqueue(new Callback<String>() {
+                            apiInterface.save_updateProfile(Constants.CUSTOMER_KEY,Constants.CUSTOMER_SECRET,Constants.XKEY,invoiceNo,system_type,email,docType,signature).enqueue(new Callback<String>() {
                                 @Override
                                 public void onResponse(Call<String> call, Response<String> response) {
                                     Util.hideDialog();
@@ -142,6 +159,27 @@ public class OrderDetail extends AppCompatActivity {
                                             com.google.android.material.button.MaterialButton btnOk = dialogView.findViewById(R.id.btnOk);
                                             AlertDialog alertDialog = dialogBuilder.create();
                                             alertDialog.show();
+
+                                            btnOk.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    alertDialog.dismiss();
+                                                    finish();
+
+                                                }
+                                            });
+                                        }else if(status==500){
+                                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(OrderDetail.this);
+                                            LayoutInflater inflater = getLayoutInflater();
+                                            View dialogView = inflater.inflate(R.layout.dialog_success, null);
+                                            dialogBuilder.setView(dialogView);
+                                            dialogBuilder.setCancelable(false);
+
+                                            com.google.android.material.button.MaterialButton btnOk = dialogView.findViewById(R.id.btnOk);
+                                            TextView  tvMsg= dialogView.findViewById(R.id.tvMsg);
+                                            AlertDialog alertDialog = dialogBuilder.create();
+                                            alertDialog.show();
+                                            tvMsg.setText(message+"");
 
                                             btnOk.setOnClickListener(new View.OnClickListener() {
                                                 @Override
@@ -282,7 +320,7 @@ public class OrderDetail extends AppCompatActivity {
 
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        myBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bytes);
 
 //        File obj = new File(
 //                Environment.getExternalStorageDirectory().getAbsolutePath() + "/spyker/");

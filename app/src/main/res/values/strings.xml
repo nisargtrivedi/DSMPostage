@@ -8,4 +8,17 @@
     <string name="invoice_not_found">Invoice/Consignment not found in the system</string>
     <string name="forgot_password"><u>Forgot Password</u></string>
 
+    <string-array name="system_name">
+        <item>
+            --SELECT SYSTEM--
+        </item>
+        <item>
+            DSM SYSTEM
+        </item>
+        <item>
+            MDJ SYSTEM
+        </item>
+
+    </string-array>
+
 </resources>

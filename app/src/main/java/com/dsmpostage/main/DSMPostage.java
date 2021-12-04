@@ -41,7 +41,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class DSMPostage extends Application {
     final  String TAG= getClass().getName();
     private static DSMPostage mInstance;
-    private static Retrofit retrofit=null;
+    public static Retrofit retrofit=null;
 
     AppPreferences appPreferences;
 
@@ -94,9 +94,42 @@ public class DSMPostage extends Application {
         }
         return retrofit;
     }
+
+    public static Retrofit getRetrofitClient2(){
+        Interceptor interceptor = new Interceptor() {
+            @Override public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+                Request.Builder builder = request.newBuilder().addHeader("Cache-Control", "no-cache");
+                request = builder.build();
+                return chain.proceed(request);
+            }
+        };
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+// set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        if(retrofit==null){
+            //okhttp3.OkHttpClient client=new okhttp3.OkHttpClient.Builder().build();
+            OkHttpClient.Builder client=new OkHttpClient.Builder();
+            client.addInterceptor(logging);
+            client.addInterceptor(interceptor);
+            client.connectTimeout(60, TimeUnit.SECONDS);
+            client.readTimeout(60, TimeUnit.SECONDS);
+
+            retrofit=new Retrofit.Builder()
+                    .client(client.build())
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl(Constants.MDJ_BASE_URL)
+                    .build();
+        }
+        return retrofit;
+    }
     public void showDialog(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
     }
 
 
+    public void setPreferenceValue(String value){
+        mInstance.appPreferences.set("URL",value);
+    }
 }

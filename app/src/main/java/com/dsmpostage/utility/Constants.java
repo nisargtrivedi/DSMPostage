@@ -10,8 +10,13 @@ import java.util.Date;
 
 public class Constants {
 
-    //v1.0 Dev Server
+    //v1.0 DSM Dev Server
     public static String BASE_URL = "https://bi8mwrv779.execute-api.ap-southeast-2.amazonaws.com/";
+
+    //v1.0 MDJ Dev Server
+    public static String MDJ_BASE_URL = "https://6744fgmb78.execute-api.ap-southeast-2.amazonaws.com/";
+
+
 
     //v1.0 Live Server
     //public static String BASE_URL = "https://ywr0aqsemh.execute-api.ap-southeast-2.amazonaws.com/";

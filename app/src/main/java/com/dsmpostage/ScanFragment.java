@@ -158,8 +158,12 @@ public class ScanFragment extends Fragment implements ZXingScannerView.ResultHan
 
 
 
+        //OLD DATA
 //        Invoice Code: INV21353,Customer Name: G.P. ISRAEL DIAMONDS,Date: Jan 22, 2021,Due Amount: $ 144.37,System: diamond
 
+
+        //NEW DATA
+//        Invoice Code: ORD1,Supplier Name: A S EXPORT,Date: Nov 9, 2021,Amount: $ 50.00,System: jewellery,App: DSM,Type: Manufacturing
 
 
     }

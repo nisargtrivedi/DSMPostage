@@ -40,6 +40,7 @@ public interface APIInterface {
 //            @Part("invoice_code") RequestBody invoice_code,
 //            @Part("system_type") RequestBody system_type,
 //            @Part("email") RequestBody email,
+//            @Part("document_type") RequestBody document_type,
 //            @Part MultipartBody.Part pic);
 
     //Development
@@ -60,6 +61,7 @@ public interface APIInterface {
             @Part("invoice_code") RequestBody invoice_code,
             @Part("system_type") RequestBody system_type,
             @Part("email") RequestBody email,
+            @Part("document_type") RequestBody document_type,
             @Part MultipartBody.Part pic);
 
 

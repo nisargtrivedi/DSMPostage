@@ -3,12 +3,14 @@ package com.dsmpostage;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -59,13 +61,16 @@ public class LogFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         appPreferences=new AppPreferences(getActivity());
-        LoadData();
+       // LoadData();
+        onItemSelected();
     }
 
     @UiThread
-    private void LoadData(){
+    private void LoadData(int baseURL){
+
         Util.showDialog(getActivity());
-       APIInterface apiInterface=DSMPostage.getRetrofitClient().create(APIInterface.class);
+        DSMPostage.retrofit = null;
+       APIInterface apiInterface= (baseURL==1 ? DSMPostage.getRetrofitClient().create(APIInterface.class):DSMPostage.getRetrofitClient2().create(APIInterface.class));
 
        apiInterface.getData(Constants.TYPE, Constants.CUSTOMER_KEY,Constants.CUSTOMER_SECRET,Constants.XKEY,appPreferences.getString("USERNAME")).enqueue(new Callback<LogResponse>() {
            @Override
@@ -96,6 +101,32 @@ public class LogFragment extends Fragment {
               // System.out.println("Response--->"+t.getMessage());
            }
        });
+
+    }
+
+    private void onItemSelected(){
+        try{
+            binding.ddSystemName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    ((TextView) binding.ddSystemName.getSelectedView()).setTextColor(getResources().getColor(R.color.white));
+                    int index = adapterView.getSelectedItemPosition();
+                    if(index==1){
+                        LoadData(1);
+                    }
+                    if(index==2){
+                        LoadData(2);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+        }catch (Exception ex){
+
+        }
 
     }
 }
