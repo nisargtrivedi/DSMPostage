@@ -75,10 +75,6 @@ public class OrderDetail extends AppCompatActivity {
         String data=getIntent().getStringExtra("data");
         if(data!=null){
             String[] Orderdata=data.split(",");
-            //for(int i=0;i<Orderdata.length;i++){
-                //Log.d("DATA--"+i,Orderdata[i]);
-
-//                App: DSM,Type: Manufacturing
 
             try {
                 binding.tvInvoice.setText(Orderdata[0]);

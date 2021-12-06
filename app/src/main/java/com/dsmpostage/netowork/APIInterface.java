@@ -44,7 +44,7 @@ public interface APIInterface {
 //            @Part MultipartBody.Part pic);
 
     //Development
-    @GET("Beta")
+    @GET("prod")
     Call<LogResponse> getData(@Header("Content-Type") String type,
                               @Header("customer-key") String customerKey,
                               @Header("customer-secret") String customerSecret,
@@ -53,7 +53,7 @@ public interface APIInterface {
 
 
     @Multipart
-    @POST("Beta")
+    @POST("prod")
     Call<String> save_updateProfile(
             @Header("customer-key") String customerKey,
             @Header("customer-secret") String customerSecret,
